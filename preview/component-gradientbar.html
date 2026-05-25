@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:24px;display:flex;flex-direction:column;gap:14px;}
+  .row{display:flex;flex-direction:column;gap:4px;}
+  .top{display:flex;justify-content:space-between;font-size:13px;}
+  .lbl{color:#9fb3c8;}
+  .val{font-weight:500;}
+  .val small{color:#627d98;font-weight:400;margin-left:6px;}
+  .track{height:8px;background:rgba(36,59,85,.5);border-radius:9999px;overflow:hidden;}
+  .fill{height:100%;border-radius:9999px;transition:width .5s;}
+</style></head>
+<body><div class="card">
+  <div class="row"><div class="top"><span class="lbl">Violent Crime Rate</span><span class="val" style="color:#ef4444">82<small>(312 per 100k)</small></span></div><div class="track"><div class="fill" style="width:82%;background:#ef4444;box-shadow:0 0 8px #ef444460"></div></div></div>
+  <div class="row"><div class="top"><span class="lbl">Sex Offender Density</span><span class="val" style="color:#f97316">64<small>(247 per 100k)</small></span></div><div class="track"><div class="fill" style="width:64%;background:#f97316;box-shadow:0 0 8px #f9731660"></div></div></div>
+  <div class="row"><div class="top"><span class="lbl">Poverty Rate</span><span class="val" style="color:#fbbf24">48<small>(13.2%)</small></span></div><div class="track"><div class="fill" style="width:48%;background:#fbbf24;box-shadow:0 0 8px #fbbf2460"></div></div></div>
+  <div class="row"><div class="top"><span class="lbl">Environmental Hazards</span><span class="val" style="color:#22c55e">22<small>(low)</small></span></div><div class="track"><div class="fill" style="width:22%;background:#22c55e;box-shadow:0 0 8px #22c55e60"></div></div></div>
+  <div class="row"><div class="top"><span class="lbl">Youth-Attraction Areas</span><span class="val" style="color:#34d399">12<small>(7 in radius)</small></span></div><div class="track"><div class="fill" style="width:12%;background:#34d399;box-shadow:0 0 8px #34d39960"></div></div></div>
+</div></body></html>

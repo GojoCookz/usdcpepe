@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:24px;display:flex;flex-direction:column;gap:14px;}
+  .label{font-size:10px;color:var(--color-surface-500);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .row{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;}
+  .s{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .s .box{background:rgba(34,211,238,.20);border:1px solid rgba(34,211,238,.40);height:24px;border-radius:3px;}
+  .s small{font-family:var(--font-mono);font-size:10px;color:#627d98;}
+</style></head>
+<body><div class="card">
+  <div class="label">Spacing scale · rem · 0.25 step</div>
+  <div class="row">
+    <div class="s"><div class="box" style="width:4px"></div><small>1 · 4</small></div>
+    <div class="s"><div class="box" style="width:8px"></div><small>2 · 8</small></div>
+    <div class="s"><div class="box" style="width:12px"></div><small>3 · 12</small></div>
+    <div class="s"><div class="box" style="width:16px"></div><small>4 · 16</small></div>
+    <div class="s"><div class="box" style="width:24px"></div><small>6 · 24</small></div>
+    <div class="s"><div class="box" style="width:32px"></div><small>8 · 32</small></div>
+    <div class="s"><div class="box" style="width:48px"></div><small>12 · 48</small></div>
+    <div class="s"><div class="box" style="width:64px"></div><small>16 · 64</small></div>
+  </div>
+</div></body></html>

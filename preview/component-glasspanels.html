@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:22px;display:flex;gap:16px;align-items:flex-start;}
+  .legend{flex:1;background:rgba(13,28,50,.90);backdrop-filter:blur(10px);border:1px solid rgba(36,59,85,.35);border-radius:12px;padding:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 8px 32px rgba(0,0,0,.45);}
+  .cap{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#829ab1;margin-bottom:10px;}
+  .bar{height:10px;border-radius:9999px;background:linear-gradient(to right,#82123b,#be1c1c,#e82c2c,#fbbf24,#22c55e,#34d399);margin-bottom:8px;box-shadow:0 0 8px rgba(34,211,238,.12);}
+  .ticks{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:#486581;margin-bottom:12px;}
+  .keys{display:flex;flex-direction:column;gap:6px;}
+  .key{display:flex;align-items:center;gap:8px;font-size:11px;color:#829ab1;}
+  .dot{width:10px;height:10px;border-radius:2px;}
+</style></head>
+<body><div class="card">
+  <div class="legend">
+    <div class="cap">Safe Index</div>
+    <div class="bar"></div>
+    <div class="ticks"><span>0</span><span>50</span><span>100</span></div>
+    <div class="keys">
+      <div class="key"><span class="dot" style="background:#82123b"></span>Critical</div>
+      <div class="key"><span class="dot" style="background:#be1c1c"></span>High Risk</div>
+      <div class="key"><span class="dot" style="background:#e82c2c"></span>Elevated Risk</div>
+      <div class="key"><span class="dot" style="background:#fbbf24"></span>Caution</div>
+      <div class="key"><span class="dot" style="background:#22c55e"></span>Low Risk</div>
+      <div class="key"><span class="dot" style="background:#34d399"></span>Safe</div>
+    </div>
+  </div>
+  <div class="legend" style="flex:1.2;background:linear-gradient(160deg,#071020 0%,#0b1a30 100%);border-color:rgba(34,211,238,.26);box-shadow:0 24px 60px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.04), 0 0 40px rgba(34,211,238,.06);">
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
+      <span style="font-size:24px;line-height:1">🔍</span>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.3;">Search Any Address</div>
+        <div style="font-size:11px;color:#829ab1;margin-top:4px;line-height:1.5;">Type any US address or city in the search box. The map flies straight to it.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;gap:5px;align-items:center;">
+        <span style="width:6px;height:6px;border-radius:9999px;background:rgba(100,116,139,.5)"></span>
+        <span style="width:16px;height:6px;border-radius:9999px;background:#22d3ee"></span>
+        <span style="width:6px;height:6px;border-radius:9999px;background:rgba(100,116,139,.5)"></span>
+      </div>
+      <button style="padding:6px 14px;background:rgba(34,211,238,.15);border:1px solid rgba(34,211,238,.30);color:#67e8f9;font-size:12px;font-weight:600;border-radius:10px;cursor:pointer;">Next ›</button>
+    </div>
+  </div>
+</div></body></html>

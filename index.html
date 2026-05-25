@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>$PEPE — feels good man</title>
+<link rel="icon" href="images/pepe-hero.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f3e8c8;
+    --bg-2:#ecdcad;
+    --paper:#fbf4dd;
+    --ink:#0a1730;
+    --ink-2:#27365e;
+    --line:#0a1730;
+    --blue:#1656d6;
+    --blue-2:#0c3aa0;
+    --blue-3:#7eb0ff;
+    --red:#d24a2c;
+    --cream:#fff8e1;
+    --post:#eaf2ff;
+    --green:#1656d6; /* "greentext" but blue */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #d8e6ff 0%, transparent 60%),
+      radial-gradient(800px 500px at -10% 110%, #ffe7d9 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Space Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* -------- top bar -------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:var(--ink);color:var(--cream);
+    border-bottom:3px solid var(--blue);
+    display:flex;align-items:center;gap:18px;
+    padding:10px 22px;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:14px;
+  }
+  .topbar .brand{
+    display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.04em;
+  }
+  .topbar .brand img{width:28px;height:28px;border-radius:6px;border:1px solid var(--blue-3)}
+  .topbar .links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .topbar .links a{
+    color:var(--cream);padding:6px 10px;border:1px solid #ffffff22;border-radius:4px;
+    background:#ffffff0a;
+  }
+  .topbar .links a:hover{background:var(--blue);border-color:var(--blue);text-decoration:none}
+  .topbar .live{
+    display:inline-flex;align-items:center;gap:6px;
+    color:#9be3a4;font-weight:700;letter-spacing:.08em;font-size:12px;
+  }
+  .topbar .live .dot{width:8px;height:8px;border-radius:50%;background:#48d863;box-shadow:0 0 8px #48d863}
+
+  /* -------- ticker -------- */
+  .ticker{
+    background:var(--blue);color:#fff;
+    border-bottom:3px solid var(--ink);
+    overflow:hidden;white-space:nowrap;
+    font-family:"JetBrains Mono",monospace;font-weight:700;letter-spacing:.06em;font-size:14px;
+  }
+  .ticker-track{display:inline-block;padding:8px 0;animation:scroll 40s linear infinite}
+  .ticker span{padding:0 22px;border-right:1px dashed #ffffff66}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* -------- hero -------- */
+  .hero{
+    max-width:1280px;margin:0 auto;padding:48px 22px 30px;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+  }
+  @media (max-width:900px){.hero{grid-template-columns:1fr;gap:28px;padding-top:32px}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.16em;
+    color:var(--ink-2);text-transform:uppercase;
+    background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;
+    padding:6px 14px;
+  }
+  .eyebrow .frog{width:14px;height:14px;border-radius:50%;background:var(--blue)}
+
+  h1.title{
+    font-family:"Bowlby One",sans-serif;
+    font-weight:400;
+    font-size:clamp(72px,12vw,168px);
+    line-height:.86;letter-spacing:-.02em;
+    margin:18px 0 4px;color:var(--ink);
+    text-shadow: 6px 6px 0 var(--blue);
+  }
+  h1.title .dollar{color:var(--red)}
+  .tagline{
+    font-family:"Bowlby One",sans-serif;
+    font-size:clamp(22px,2.4vw,32px);
+    color:var(--blue-2);margin:6px 0 24px;letter-spacing:.01em;
+  }
+  .lede{
+    font-size:18px;color:var(--ink-2);max-width:52ch;margin:0 0 28px;
+  }
+
+  .ca-box{
+    background:var(--paper);border:2px solid var(--ink);border-radius:14px;
+    padding:14px 16px;display:flex;flex-direction:column;gap:10px;max-width:640px;
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .ca-label{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;
+    color:var(--ink-2);text-transform:uppercase;
+  }
+  .ca-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ca-row code{
+    font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:500;
+    color:var(--ink);background:#fff8d9;border:1px dashed var(--ink);
+    padding:8px 10px;border-radius:6px;flex:1;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .ca-row button{
+    font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.08em;
+    background:var(--ink);color:var(--cream);border:none;border-radius:6px;
+    padding:9px 14px;cursor:pointer;text-transform:uppercase;
+  }
+  .ca-row button:hover{background:var(--blue)}
+  .ca-row button.copied{background:#1f8a3d}
+
+  .cta-row{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"Bowlby One",sans-serif;font-size:18px;letter-spacing:.02em;
+    padding:14px 22px;border-radius:12px;border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    cursor:pointer;text-decoration:none;
+    transition:transform .08s ease;
+  }
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink);text-decoration:none}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .btn.primary{background:var(--blue);color:#fff}
+  .btn.ghost{background:var(--paper);color:var(--ink)}
+  .btn .arrow{font-family:"JetBrains Mono",monospace;font-weight:700}
+
+  /* hero portrait */
+  .portrait{
+    position:relative;justify-self:center;
+    width:min(520px,100%);
+    aspect-ratio:1/1;
+  }
+  .portrait .frame{
+    position:absolute;inset:0;
+    background:var(--blue);border:3px solid var(--ink);border-radius:18px;
+    box-shadow:10px 10px 0 var(--ink);
+    overflow:hidden;
+  }
+  .portrait .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .portrait .sticker{
+    position:absolute;background:var(--cream);
+    border:2px solid var(--ink);border-radius:8px;
+    padding:6px 10px;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .portrait .sticker.s1{top:-14px;left:-14px;transform:rotate(-6deg);background:#ffe14a}
+  .portrait .sticker.s2{bottom:-14px;right:-10px;transform:rotate(4deg);background:var(--blue);color:#fff}
+  .portrait .sticker.s3{top:30%;right:-22px;transform:rotate(8deg);background:var(--red);color:#fff}
+
+  /* -------- stats strip -------- */
+  .stats{
+    max-width:1280px;margin:8px auto 0;padding:0 22px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  }
+  @media (max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{
+    background:var(--paper);border:2px solid var(--ink);border-radius:12px;
+    padding:14px 16px;
+  }
+  .stat .k{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;color:var(--ink-2);text-transform:uppercase}
+  .stat .v{font-family:"Bowlby One",sans-serif;font-size:26px;color:var(--ink);margin-top:4px}
+  .stat .sub{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-2);margin-top:2px}
+
+  /* -------- section heading -------- */
+  .sec{max-width:1280px;margin:64px auto 0;padding:0 22px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px}
+  .sec-head h2{
+    font-family:"Bowlby One",sans-serif;font-weight:400;font-size:clamp(32px,4vw,52px);
+    margin:0;letter-spacing:-.01em;color:var(--ink);
+  }
+  .sec-head .tag{
+    font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.12em;
+    color:var(--ink-2);text-transform:uppercase;margin-left:auto;
+  }
+
+  /* -------- collage -------- */
+  .collage{
+    display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:12px;
+  }
+  @media (max-width:900px){.collage{grid-template-columns:repeat(3,1fr);grid-auto-rows:120px}}
+  .tile{
+    border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:var(--paper);
+    box-shadow:4px 4px 0 var(--ink);position:relative;
+  }
+  .tile img{width:100%;height:100%;object-fit:cover;display:block}
+  .tile .cap{
+    position:absolute;left:6px;bottom:6px;
+    background:var(--cream);border:1.5px solid var(--ink);border-radius:6px;
+    padding:3px 8px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;
+  }
+  .t-a{grid-column:span 2;grid-row:span 2}
+  .t-b{grid-column:span 2;grid-row:span 1}
+  .t-c{grid-column:span 2;grid-row:span 1}
+  .t-d{grid-column:span 1;grid-row:span 2}
+  .t-e{grid-column:span 1;grid-row:span 1}
+  .t-f{grid-column:span 2;grid-row:span 1}
+  .t-g{grid-column:span 1;grid-row:span 1}
+  .t-h{grid-column:span 2;grid-row:span 2}
+  .t-i{grid-column:span 1;grid-row:span 1}
+  .t-j{grid-column:span 1;grid-row:span 1}
+  .t-k{grid-column:span 2;grid-row:span 1}
+  @media (max-width:900px){
+    .t-a,.t-b,.t-c,.t-d,.t-e,.t-f,.t-g,.t-h,.t-i,.t-j,.t-k{grid-column:span 1;grid-row:span 1}
+    .t-a,.t-h{grid-column:span 2;grid-row:span 2}
+  }
+
+  /* -------- chart -------- */
+  .chart-wrap{
+    background:#0a0a18;border:3px solid var(--ink);border-radius:16px;
+    padding:14px;box-shadow:8px 8px 0 var(--ink);
+  }
+  #dexscreener-embed{position:relative;width:100%;padding-bottom:125%}
+  @media(min-width:1100px){#dexscreener-embed{padding-bottom:60%}}
+  #dexscreener-embed iframe{position:absolute;width:100%;height:100%;top:0;left:0;border:0;border-radius:8px}
+
+  /* -------- thread board -------- */
+  .board-frame{
+    background:var(--paper);border:3px solid var(--ink);border-radius:14px;
+    box-shadow:8px 8px 0 var(--ink);overflow:hidden;
+  }
+  .board-bar{
+    display:flex;align-items:center;gap:10px;
+    background:var(--ink);color:var(--cream);
+    padding:10px 14px;font-family:"JetBrains Mono",monospace;font-size:13px;
+  }
+  .board-bar .bd{
+    background:var(--blue);color:#fff;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.06em;
+  }
+  .board-bar .sub{opacity:.7;margin-left:auto}
+  .thread{padding:18px;display:flex;flex-direction:column;gap:14px}
+  .post{
+    background:var(--post);
+    border:1.5px solid #b9caf0;border-left:4px solid var(--blue);
+    padding:12px 14px;border-radius:6px;
+    display:grid;grid-template-columns:140px 1fr;gap:14px;
+  }
+  .post.op{
+    background:#fff5db;border-color:#e3d089;border-left-color:var(--red);
+  }
+  .post.reply{margin-left:32px}
+  @media(max-width:700px){
+    .post{grid-template-columns:1fr}
+    .post.reply{margin-left:14px}
+  }
+  .post .pic{
+    border:1px solid #00000022;border-radius:4px;overflow:hidden;background:#fff;
+    aspect-ratio:1/1;
+  }
+  .post .pic img{width:100%;height:100%;object-fit:cover;display:block}
+  .post .pic .nopic{
+    width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-family:"JetBrains Mono",monospace;font-size:10px;color:#888;
+    background:repeating-linear-gradient(45deg,#f0f0f0,#f0f0f0 6px,#fafafa 6px,#fafafa 12px);
+  }
+  .post .body{font-size:15px;line-height:1.5}
+  .post-meta{
+    font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-2);
+    display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px;
+  }
+  .post-meta .name{color:var(--blue-2);font-weight:700}
+  .post-meta .op-tag{color:var(--red);font-weight:700}
+  .post-meta .id{opacity:.6}
+  .post-meta .no{color:var(--ink-2)}
+  .post-meta .no a{color:var(--ink-2)}
+  .post-subject{
+    font-family:"Bowlby One",sans-serif;font-size:18px;color:var(--red);margin:0 0 4px;
+  }
+  .gt{color:var(--blue);font-weight:500}
+  .post p{margin:0 0 6px}
+  .post .qref{color:var(--blue-2);text-decoration:underline;font-family:"JetBrains Mono",monospace;font-size:13px}
+
+  /* -------- footer -------- */
+  footer{
+    margin-top:80px;background:var(--ink);color:var(--cream);
+    padding:36px 22px;border-top:4px solid var(--blue);
+  }
+  .foot-in{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:30px;align-items:center}
+  .foot-in .big{font-family:"Bowlby One",sans-serif;font-size:48px;letter-spacing:.02em}
+  .foot-in .big .dollar{color:var(--red)}
+  .foot-in .note{font-family:"JetBrains Mono",monospace;font-size:12px;opacity:.7;max-width:60ch;margin-left:auto}
+  .foot-links{display:flex;gap:14px;margin-left:auto}
+  .foot-links a{color:var(--cream);border:1px solid #ffffff33;padding:8px 14px;border-radius:6px;font-family:"JetBrains Mono",monospace;font-size:13px}
+  .foot-links a:hover{background:var(--blue);border-color:var(--blue);text-decoration:none}
+
+  /* trade strip */
+  .trade-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  @media(max-width:900px){.trade-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.trade-grid{grid-template-columns:1fr}}
+  .trade-card{
+    display:flex;align-items:center;gap:14px;
+    background:var(--paper);border:2px solid var(--ink);border-radius:14px;
+    padding:14px 16px;box-shadow:5px 5px 0 var(--ink);
+    color:var(--ink);text-decoration:none;
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .trade-card:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);text-decoration:none}
+  .trade-card:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .trade-card.primary{background:var(--blue);color:#fff;border-color:var(--ink)}
+  .trade-card.primary .tc-sub{color:#dbe7ff}
+  .tc-logo{
+    width:44px;height:44px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Bowlby One",sans-serif;font-size:22px;color:#fff;
+    border:2px solid var(--ink);flex-shrink:0;
+  }
+  .tc-logo.pump{background:#22c55e}
+  .tc-logo.jup{background:#0a1730;color:#7aedb9}
+  .tc-logo.axiom{background:#000;color:#fff}
+  .tc-logo.gmgn{background:#ffe14a;color:#0a1730}
+  .tc-logo.trojan{background:#d24a2c}
+  .tc-logo.padre{background:#7c3aed}
+  .tc-body{flex:1;min-width:0}
+  .tc-name{font-family:"Bowlby One",sans-serif;font-size:20px;line-height:1.1}
+  .tc-sub{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--ink-2);margin-top:3px}
+  .tc-arrow{font-family:"JetBrains Mono",monospace;font-size:20px;opacity:.7}
+
+  /* lore badge */
+  .lore-badge{
+    display:flex;align-items:stretch;gap:0;max-width:640px;margin:22px 0 0;
+    background:var(--paper);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:6px 6px 0 var(--blue);overflow:hidden;
+  }
+  .lore-stamp{
+    background:var(--red);color:#fff;
+    font-family:"Bowlby One",sans-serif;font-size:28px;letter-spacing:.04em;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 18px;border-right:2px solid var(--ink);
+    transform:rotate(0);
+  }
+  .lore-text{padding:12px 14px;font-size:15px;line-height:1.45}
+  .lore-text em{font-style:normal;font-family:"JetBrains Mono",monospace;background:#fff5db;border:1px dashed #00000033;padding:0 5px;border-radius:4px}
+
+  /* tiny float on hero */
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .portrait .frame{animation:bob 5s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<!-- topbar -->
+<header class="topbar" data-screen-label="00 Topbar">
+  <div class="brand">
+    <img src="images/pepe-hero.jpg" alt="Pepe" />
+    <span>$PEPE / SOL</span>
+  </div>
+  <span class="live"><span class="dot"></span>LIVE ON PUMP.FUN</span>
+  <nav class="links">
+    <a href="#thread">/pepe/</a>
+    <a href="#chart">Chart</a>
+    <a href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">pump.fun</a>
+    <a href="https://dexscreener.com/solana/7UGZDu9CcXwsio25z59cQRMAHqoynUbxgg8HRS4MnhNF" target="_blank" rel="noopener">DexScreener</a>
+  </nav>
+</header>
+
+<!-- ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>★ $PEPE ON SOLANA</span>
+    <span>feels good man</span>
+    <span>CA: BQEfA6Hr…SPCpump</span>
+    <span>build by frogs, for frogs</span>
+    <span>blue pepe summer</span>
+    <span>pump.fun listed</span>
+    <span>★ $PEPE ON SOLANA</span>
+    <span>feels good man</span>
+    <span>CA: BQEfA6Hr…SPCpump</span>
+    <span>build by frogs, for frogs</span>
+    <span>blue pepe summer</span>
+    <span>pump.fun listed</span>
+  </div>
+</div>
+
+<!-- hero -->
+<section class="hero" data-screen-label="01 Hero">
+  <div>
+    <span class="eyebrow"><span class="frog"></span>First USDC pair on pump.fun · Solana</span>
+    <h1 class="title"><span class="dollar">$</span>PEPE</h1>
+    <div class="tagline">feels good, man.</div>
+    <p class="lede">
+      The blue rare. A community memecoin minted on
+      <a href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">pump.fun</a>, powered by frogs,
+      paid in vibes. No roadmap. No utility. Just the original
+      good-boy amphibian, painted blue, posting through it.
+    </p>
+
+    <div class="lore-badge">
+      <span class="lore-stamp">FIRST</span>
+      <div class="lore-text">
+        <strong>First USDC pair on pump.fun.</strong>
+        On <em>21 May 2026</em>, pump.fun introduced USDC pairs into the ecosystem.
+        <strong>$PEPE</strong> was the first USDC pair on-chain on Solana. History, blue-pilled.
+      </div>
+    </div>
+
+    <div class="ca-box">
+      <span class="ca-label">Contract Address (Solana)</span>
+      <div class="ca-row">
+        <code id="ca">BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump</code>
+        <button id="copy-ca" type="button">Copy</button>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn primary" href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">
+        Buy on pump.fun <span class="arrow">→</span>
+      </a>
+      <a class="btn ghost" href="#chart">
+        See the chart <span class="arrow">↓</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="portrait">
+    <div class="frame"><img src="images/pepe-hero.jpg" alt="Blue Pepe — the main icon" /></div>
+    <div class="sticker s1">RARE · BLUE</div>
+    <div class="sticker s2">$PEPE</div>
+    <div class="sticker s3">feels good</div>
+  </div>
+</section>
+
+<!-- stats -->
+<section class="stats" aria-label="Coin facts">
+  <div class="stat">
+    <div class="k">First USDC Pair</div>
+    <div class="v">21 May 2026</div>
+    <div class="sub">on pump.fun · historical</div>
+  </div>
+  <div class="stat">
+    <div class="k">Launchpad</div>
+    <div class="v">pump.fun</div>
+    <div class="sub">fair launch · no presale</div>
+  </div>
+  <div class="stat">
+    <div class="k">Supply</div>
+    <div class="v">1,000,000,000</div>
+    <div class="sub">community held</div>
+  </div>
+  <div class="stat">
+    <div class="k">Tax</div>
+    <div class="v">0 / 0</div>
+    <div class="sub">no team wallet · no bs</div>
+  </div>
+</section>
+
+<!-- trade on -->
+<section class="sec" data-screen-label="02 Trade" style="margin-top:48px">
+  <div class="sec-head">
+    <h2>Trade $PEPE</h2>
+    <span class="tag">// pick your weapon</span>
+  </div>
+  <div class="trade-grid">
+    <a class="trade-card primary" href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">
+      <div class="tc-logo pump">P</div>
+      <div class="tc-body">
+        <div class="tc-name">pump.fun</div>
+        <div class="tc-sub">launchpad · fair launch</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+    <a class="trade-card" href="https://jup.ag/?sell=So11111111111111111111111111111111111111112&buy=BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">
+      <div class="tc-logo jup">J</div>
+      <div class="tc-body">
+        <div class="tc-name">Jupiter</div>
+        <div class="tc-sub">swap SOL → $PEPE</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+    <a class="trade-card" href="https://axiom.trade/@amicus108" target="_blank" rel="noopener">
+      <div class="tc-logo axiom">A</div>
+      <div class="tc-body">
+        <div class="tc-name">Axiom</div>
+        <div class="tc-sub">pro trading terminal</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+    <a class="trade-card" href="https://gmgn.ai/r/wetfinger" target="_blank" rel="noopener">
+      <div class="tc-logo gmgn">G</div>
+      <div class="tc-body">
+        <div class="tc-name">GMGN</div>
+        <div class="tc-sub">smart-money tracker</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+    <a class="trade-card" href="https://trojan.com/@gojocookz" target="_blank" rel="noopener">
+      <div class="tc-logo trojan">T</div>
+      <div class="tc-body">
+        <div class="tc-name">Trojan</div>
+        <div class="tc-sub">telegram trading bot</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+    <a class="trade-card" href="https://trade.padre.gg/rk/amicus" target="_blank" rel="noopener">
+      <div class="tc-logo padre">P</div>
+      <div class="tc-body">
+        <div class="tc-name">Padre Terminal</div>
+        <div class="tc-sub">multi-chain terminal</div>
+      </div>
+      <span class="tc-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- collage -->
+<section class="sec" data-screen-label="03 Gallery">
+  <div class="sec-head">
+    <h2>Pepe, in his element</h2>
+    <span class="tag">// gallery</span>
+  </div>
+  <div class="collage">
+    <div class="tile t-a"><img src="images/pepe-pilot.jpg" alt="Captain Pepe"/><span class="cap">/pepe/ — captain</span></div>
+    <div class="tile t-b"><img src="images/pepe-chart.jpg" alt="Pepe on charts"/><span class="cap">/pepe/ — chart climber</span></div>
+    <div class="tile t-c"><img src="images/pepe-trader.jpg" alt="Pepe trader"/><span class="cap">/pepe/ — desk job</span></div>
+    <div class="tile t-d"><img src="images/pepe-super.jpg" alt="Super Pepe"/><span class="cap">/pepe/ — super</span></div>
+    <div class="tile t-e"><img src="images/pepe-bag.jpg" alt="Baggie Pepe"/><span class="cap">/pepe/ — bag</span></div>
+    <div class="tile t-f"><img src="images/pepe-pub.jpg" alt="Pub Pepe"/><span class="cap">/pepe/ — pint o'clock</span></div>
+    <div class="tile t-g"><img src="images/pepe-heart.jpg" alt="Heart Pepe"/><span class="cap">/pepe/ — love</span></div>
+    <div class="tile t-h"><img src="images/pepe-tribe.jpg" alt="Tribe of pepes"/><span class="cap">/pepe/ — the lads</span></div>
+    <div class="tile t-i"><img src="images/pepe-hood.jpg" alt="Hooded Pepe"/><span class="cap">/pepe/ — quant</span></div>
+    <div class="tile t-j"><img src="images/pepe-tux.jpg" alt="Tux Pepe"/><span class="cap">/pepe/ — fancy</span></div>
+    <div class="tile t-k"><img src="images/pepe-shrek.jpg" alt="Pepe & friends"/><span class="cap">/pepe/ — quest</span></div>
+  </div>
+</section>
+
+<!-- chart -->
+<section class="sec" id="chart" data-screen-label="04 Chart">
+  <div class="sec-head">
+    <h2>Live chart</h2>
+    <span class="tag">// dexscreener · solana</span>
+  </div>
+  <div class="chart-wrap">
+    <div id="dexscreener-embed"><iframe title="Pepe chart" src="https://dexscreener.com/solana/7UGZDu9CcXwsio25z59cQRMAHqoynUbxgg8HRS4MnhNF?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe></div>
+  </div>
+</section>
+
+<!-- thread -->
+<section class="sec" id="thread" data-screen-label="05 Thread">
+  <div class="sec-head">
+    <h2>/pepe/ — the thread</h2>
+    <span class="tag">// 24 posts · pinned by Anon</span>
+  </div>
+
+  <div class="board-frame">
+    <div class="board-bar">
+      <span class="bd">/pepe/</span>
+      <span>Rare Pepes &amp; meme finance — anonymous discussion board</span>
+      <span class="sub">Page 1 · 1,337,420 replies · sage if shitpost</span>
+    </div>
+
+    <div class="thread">
+
+      <!-- OP -->
+      <article class="post op">
+        <div class="pic"><img src="images/pepe-hero.jpg" alt="OP image"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">Anonymous</span>
+            <span class="op-tag">(OP)</span>
+            <span>05/24/26(Sun)08:14:32</span>
+            <span class="id">ID: bluefr0g</span>
+            <span class="no"><a href="#p1">No.1000001</a> ▶</span>
+          </div>
+          <h3 class="post-subject">$PEPE — feels good, man</h3>
+          <p style="background:#fff;border:1.5px dashed var(--red);border-radius:6px;padding:8px 10px;margin-bottom:10px">
+            📌 <strong>PINNED LORE:</strong> On <strong>21 May 2026</strong>, pump.fun introduced USDC pairs into the
+            ecosystem. <strong>$PEPE</strong> was the <strong>first USDC pair on-chain on Solana</strong>. We were here for it.
+          </p>
+          <p><span class="gt">&gt;be me</span></p>
+          <p><span class="gt">&gt;mfw pepe is back, and he's blue</span></p>
+          <p><span class="gt">&gt;mfw the rarest pepe is also the comfiest pepe</span></p>
+          <p>Pinned thread for the $PEPE community on Solana. Drop facts about Pepe, Matt Furie, the chain, USDC, whatever. No racism, no politics, no Nick. Just frog things. CA in OP — <code style="font-family:'JetBrains Mono',monospace;background:#fff5db;border:1px dashed #00000033;padding:1px 5px">BQEfA6Hr…SPCpump</code>.</p>
+        </div>
+      </article>
+
+      <!-- Reply 1: Pepe origin -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-shrek.jpg" alt="Pepe and friends"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">FeelsGoodAnon</span>
+            <span>05/24/26(Sun)08:21:09</span>
+            <span class="id">ID: 4chan0n</span>
+            <span class="no"><a href="#p2">No.1000002</a> ▶</span>
+          </div>
+          <p><span class="qref">&gt;&gt;1000001</span></p>
+          <p><strong>Fun fact about Pepe #1:</strong> Pepe debuted in 2005 in Matt Furie's zine-style comic "Boy's Club", a slacker-stoner strip starring four roommate monsters — Pepe, Andy, Landwolf, and Brett.</p>
+          <p>The "feels good man" line is from a single panel where Pepe pulls his pants all the way down to pee. that's it. that's the meme. <span class="gt">&gt;feelsgoodman.jpg</span></p>
+        </div>
+      </article>
+
+      <!-- Reply 2: Matt Furie -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-mirror.jpg" alt="Pepe self portrait"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">FurieFan</span>
+            <span>05/24/26(Sun)08:34:47</span>
+            <span class="id">ID: ohi0boy</span>
+            <span class="no"><a href="#p3">No.1000003</a> ▶</span>
+          </div>
+          <p><strong>Matt Furie lore drop:</strong></p>
+          <p><span class="gt">&gt;born in Columbus, Ohio</span></p>
+          <p><span class="gt">&gt;art school dropout, worked at a daycare</span></p>
+          <p><span class="gt">&gt;drew Boy's Club in pen on printer paper, posted it on MySpace</span></p>
+          <p><span class="gt">&gt;also illustrated a kids' picture book called "The Night Riders" about a frog &amp; a rat on a bike</span></p>
+          <p>The "Feels Good Man" documentary (2020) is the best primer on how a chill cartoon frog ended up where he ended up. Matt's the GOAT.</p>
+        </div>
+      </article>
+
+      <!-- Reply 3: USDC -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-trader.jpg" alt="Pepe trader"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">StableChad</span>
+            <span>05/24/26(Sun)08:41:11</span>
+            <span class="id">ID: peg1to1</span>
+            <span class="no"><a href="#p4">No.1000004</a> ▶</span>
+          </div>
+          <p><strong>USDC primer for the newfags:</strong></p>
+          <p><span class="gt">&gt;issued by Circle, launched 2018</span></p>
+          <p><span class="gt">&gt;1:1 backed by cash &amp; short-term US treasuries</span></p>
+          <p><span class="gt">&gt;native USDC lives on Solana too — not just a wrap</span></p>
+          <p>Pair $PEPE with USDC if you want to take a sleep break without watching a candle, anon. It's literally the calmest thing on the chart.</p>
+        </div>
+      </article>
+
+      <!-- Reply 4: Rare Pepes NFT history -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-tribe.jpg" alt="Many pepes"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">RarePepeDealer</span>
+            <span>05/24/26(Sun)08:55:30</span>
+            <span class="id">ID: cprtypty</span>
+            <span class="no"><a href="#p5">No.1000005</a> ▶</span>
+          </div>
+          <p><strong>Fun fact #2:</strong> Rare Pepes were one of the very first NFT projects in crypto history. Back in 2016 people were minting Pepe trading cards on the Counterparty protocol — on Bitcoin — years before "NFT" was a word your aunt knew.</p>
+          <p><span class="gt">&gt;buying jpegs of a sad frog in 2016</span></p>
+          <p><span class="gt">&gt;told you were wasting money</span></p>
+          <p><span class="gt">&gt;some sold for six figures later</span></p>
+          <p>feelsgoodman.dat</p>
+        </div>
+      </article>
+
+      <!-- Reply 5: Furie lawsuits -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-cop.jpg" alt="Pepe cop"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">CourtroomAnon</span>
+            <span>05/24/26(Sun)09:02:00</span>
+            <span class="id">ID: dmca4u</span>
+            <span class="no"><a href="#p6">No.1000006</a> ▶</span>
+          </div>
+          <p><strong>Furie defended Pepe in court:</strong> Matt Furie successfully sued Infowars in 2018 over an unauthorized Pepe poster, and went after a children's book that misappropriated the character. He took copyright of Pepe seriously even while the meme ran wild.</p>
+          <p>also: in 2017 he literally drew a comic where Pepe died, in a symbolic attempt to take the character back. didn't stick. you can't kill a frog, anon.</p>
+        </div>
+      </article>
+
+      <!-- Reply 6: Hong Kong -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-super.jpg" alt="Super Pepe"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">DemocracyFrog</span>
+            <span>05/24/26(Sun)09:18:42</span>
+            <span class="id">ID: 852pepe</span>
+            <span class="no"><a href="#p7">No.1000007</a> ▶</span>
+          </div>
+          <p><strong>Fun fact #3:</strong> Pepe is genuinely loved in Hong Kong. During the 2019 protests he was adopted as a chill, sympathetic mascot — protestors painted him on signs and stickers. Many of them had no idea about the western drama around the character. To them he was just a cute sad frog.</p>
+          <p><span class="gt">&gt;same image, opposite meaning, depending on continent</span></p>
+          <p>memes are funny like that.</p>
+        </div>
+      </article>
+
+      <!-- Reply 7: $PEPE 2023 -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-chart.jpg" alt="Pepe chart"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">BillionDollarFrog</span>
+            <span>05/24/26(Sun)09:24:18</span>
+            <span class="id">ID: aprl2023</span>
+            <span class="no"><a href="#p8">No.1000008</a> ▶</span>
+          </div>
+          <p><strong>Fun fact #4:</strong> $PEPE on Ethereum launched in April 2023 with a stealth fair launch — no presale, no team allocation. It hit a billion dollars in market cap in under 3 weeks. Anon turned $250 into life-changing money on the early entry. The frog runs deep.</p>
+          <p><span class="gt">&gt;mfw Solana version is faster, cheaper, bluer</span></p>
+        </div>
+      </article>
+
+      <!-- Reply 8: USDC depeg -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-hood.jpg" alt="Hooded analyst Pepe"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">DepegSurvivor</span>
+            <span>05/24/26(Sun)09:33:50</span>
+            <span class="id">ID: svb87cnt</span>
+            <span class="no"><a href="#p9">No.1000009</a> ▶</span>
+          </div>
+          <p><strong>USDC fun fact:</strong> in March 2023, USDC briefly depegged to about $0.87 when Silicon Valley Bank — where Circle parked a chunk of reserves — collapsed in a single weekend.</p>
+          <p><span class="gt">&gt;diamond hands held</span></p>
+          <p><span class="gt">&gt;peg restored in 48 hours</span></p>
+          <p>It was the most exciting weekend a stablecoin will ever have. Slept through it? Couldn't be me.</p>
+        </div>
+      </article>
+
+      <!-- Reply 9: Boy's Club -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-pub.jpg" alt="Pepe at the pub"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">ZineHead</span>
+            <span>05/24/26(Sun)09:41:12</span>
+            <span class="id">ID: indi3art</span>
+            <span class="no"><a href="#p10">No.1000010</a> ▶</span>
+          </div>
+          <p><strong>Boy's Club trivia:</strong></p>
+          <p><span class="gt">&gt;only four issues ever printed (2006-2010)</span></p>
+          <p><span class="gt">&gt;originals were photocopied minicomics, distributed at indie comic shows</span></p>
+          <p><span class="gt">&gt;Fantagraphics later collected the whole run</span></p>
+          <p>Single-digit pages a month, and somehow the most influential character of 21st-century internet culture came out of it.</p>
+        </div>
+      </article>
+
+      <!-- Reply 10: USDC vs USDT -->
+      <article class="post reply">
+        <div class="pic">
+          <div class="nopic">[no pic]</div>
+        </div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">Anon</span>
+            <span>05/24/26(Sun)09:48:01</span>
+            <span class="id">ID: c1rcl3sf</span>
+            <span class="no"><a href="#p11">No.1000011</a> ▶</span>
+          </div>
+          <p><span class="qref">&gt;&gt;1000009</span></p>
+          <p>circle (USDC) is headquartered in Boston, audited monthly, publishes a reserves report. Tether (USDT) is whatever Tether feels like that week. pick your fighter.</p>
+          <p><span class="gt">&gt;tldr: USDC is the boring choice and boring is good</span></p>
+        </div>
+      </article>
+
+      <!-- Reply 11: Matt Furie new project -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-heart.jpg" alt="Loving pepe"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">FurieReturns</span>
+            <span>05/24/26(Sun)10:02:33</span>
+            <span class="id">ID: zogzfrog</span>
+            <span class="no"><a href="#p12">No.1000012</a> ▶</span>
+          </div>
+          <p><strong>Furie fun fact:</strong> Matt's other characters are amazing too — he co-created "ZOGZ" trading cards and has a whole cast of weird creatures (Charlie, Landwolf, Brett). He still posts new Pepe art occasionally on his socials. The man is genuinely just a sweet cartoonist.</p>
+          <p><span class="gt">&gt;respect the artist</span></p>
+          <p><span class="gt">&gt;buy his stuff</span></p>
+        </div>
+      </article>
+
+      <!-- Reply 12: closing -->
+      <article class="post reply">
+        <div class="pic"><img src="images/pepe-dab.jpg" alt="Pepe dab"/></div>
+        <div class="body">
+          <div class="post-meta">
+            <span class="name">Anon</span>
+            <span>05/24/26(Sun)10:11:09</span>
+            <span class="id">ID: gmgmgm</span>
+            <span class="no"><a href="#p13">No.1000013</a> ▶</span>
+          </div>
+          <p><span class="qref">&gt;&gt;1000001</span></p>
+          <p>gm /pepe/. holding bags, drinking coffee, telling everyone i know about the blue frog. feels good, man.</p>
+          <p><span class="gt">&gt;1 like = 1 pepe</span></p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- final CTA -->
+<section class="sec">
+  <div class="sec-head">
+    <h2>Time to ribbit</h2>
+    <span class="tag">// final boss</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center" class="final-grid">
+    <div>
+      <p style="font-size:20px;max-width:55ch">
+        Solana wallet ready. Pump.fun open. Blue rare in front of you. The only thing
+        between you and frog status is one click. Don't think about it too hard — Pepe
+        wouldn't.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">
+          Ape on pump.fun <span class="arrow">→</span>
+        </a>
+        <a class="btn ghost" href="https://dexscreener.com/solana/7UGZDu9CcXwsio25z59cQRMAHqoynUbxgg8HRS4MnhNF" target="_blank" rel="noopener">
+          Open chart <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="portrait" style="width:min(380px,100%)">
+      <div class="frame" style="border-radius:50%"><img src="images/pepe-hero.jpg" alt="Blue Pepe portrait" /></div>
+      <div class="sticker s2" style="bottom:0;right:0">$PEPE</div>
+    </div>
+  </div>
+  <style>@media(max-width:780px){.final-grid{grid-template-columns:1fr}}</style>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <div class="big"><span class="dollar">$</span>PEPE</div>
+    <div class="foot-links">
+      <a href="https://pump.fun/coin/BQEfA6HrTaFyn9Zc4BfeeV4xhVPEC6iFqBUajSPCpump" target="_blank" rel="noopener">pump.fun</a>
+      <a href="https://dexscreener.com/solana/7UGZDu9CcXwsio25z59cQRMAHqoynUbxgg8HRS4MnhNF" target="_blank" rel="noopener">DexScreener</a>
+      <a href="#thread">/pepe/</a>
+    </div>
+    <p class="note">$PEPE is a memecoin with no intrinsic value or financial return expectations. It exists for entertainment, community, and the love of a blue cartoon frog. Pepe the Frog was created by Matt Furie. DYOR. NFA.</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var btn = document.getElementById('copy-ca');
+    var ca = document.getElementById('ca');
+    if(!btn || !ca) return;
+    btn.addEventListener('click', function(){
+      var text = ca.textContent.trim();
+      var done = function(){
+        var orig = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function(){ btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, function(){
+          // fallback
+          var r = document.createRange();
+          r.selectNode(ca);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(r);
+          try{ document.execCommand('copy'); done(); }catch(e){}
+          window.getSelection().removeAllRanges();
+        });
+      } else {
+        var r = document.createRange();
+        r.selectNode(ca);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        try{ document.execCommand('copy'); done(); }catch(e){}
+        window.getSelection().removeAllRanges();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

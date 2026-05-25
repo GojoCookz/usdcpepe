@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:24px;display:flex;flex-direction:column;gap:16px;}
+  .label{font-size:10px;color:var(--color-surface-500);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .row{display:flex;align-items:center;gap:24px;}
+  .toggle{position:relative;display:inline-flex;align-items:center;height:28px;width:52px;border-radius:9999px;cursor:pointer;}
+  .toggle .knob{position:absolute;top:4px;height:20px;width:20px;border-radius:9999px;transition:all 200ms;}
+  .toggle.on{background:#22d3ee;box-shadow:0 0 22px rgba(34,211,238,.65), 0 0 9px rgba(34,211,238,.40), inset 0 1px 0 rgba(255,255,255,.18);}
+  .toggle.on .knob{left:28px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.35), 0 0 0 1.5px rgba(34,211,238,.40);}
+  .toggle.off{background:#1c2d45;box-shadow:inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.25);}
+  .toggle.off .knob{left:4px;background:#8ca0b8;}
+  .tlbl{font-size:13px;font-weight:500;}
+  .on + .tlbl{color:#f1f8ff;} .off + .tlbl{color:#7a90aa;}
+</style></head>
+<body><div class="card">
+  <div class="label">Toggle · on / off (signature cyan glow)</div>
+  <div class="row">
+    <label><span class="toggle on"><span class="knob"></span></span><span class="tlbl" style="margin-left:12px;color:#f1f8ff">Violent Crime</span></label>
+    <label><span class="toggle off"><span class="knob"></span></span><span class="tlbl" style="margin-left:12px;color:#7a90aa">Detention Sites</span></label>
+  </div>
+</div></body></html>

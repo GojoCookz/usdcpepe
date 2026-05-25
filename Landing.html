@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SafeNSound · Know Before You Go</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100vh; background: #0d1e35; color: #e4edf8; font-family: var(--font-sans); }
+    body { display: flex; flex-direction: column; overflow-x: hidden; }
+    main { flex: 1; }
+
+    /* ── Video backdrop ───────────────────────────────────────── */
+    .backdrop {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: #0a1120;
+    }
+    .backdrop video {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(0.78) brightness(0.65) contrast(1.05);
+    }
+    .backdrop::after {
+      /* Brand tone overlay — pulls any imagery to navy */
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.10) 0%, transparent 55%),
+        linear-gradient(180deg,
+          rgba(13,28,50,0.72) 0%,
+          rgba(13,28,50,0.80) 40%,
+          rgba(10,17,32,0.94) 100%);
+    }
+
+    /* ── Header (overlaid on backdrop) ─────────────────────────── */
+    .sns-header {
+      position: relative; z-index: 10;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      background: rgba(13,28,50,0.55);
+      border-bottom: 1px solid rgba(34,211,238,0.08);
+      box-shadow: 0 1px 0 rgba(34,211,238,0.10), 0 4px 28px rgba(0,0,0,0.45);
+    }
+    .sns-header-inner {
+      max-width: 1280px; margin: 0 auto; height: 64px;
+      padding: 0 1rem; display: flex; align-items: center; justify-content: space-between;
+    }
+    .sns-logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .sns-logo .helmet { font-size: 1.9rem; line-height: 1; display: inline-block; }
+    .sns-logo .wm { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.005em; color: rgba(255,255,255,0.95); }
+    .sns-logo .wm .n { color: #67e8f9; }
+    .sns-nav { display: flex; gap: 4px; }
+    .sns-nav a {
+      padding: 6px 14px; border-radius: 8px; font: 500 14px var(--font-sans);
+      color: #829ab1; text-decoration: none; transition: all 150ms;
+    }
+    .sns-nav a.active {
+      color: #a5f3fc; background: rgba(34,211,238,0.14);
+      box-shadow: inset 0 0 0 1px rgba(34,211,238,0.30);
+    }
+    .sns-nav a:hover:not(.active) { background: rgba(255,255,255,0.06); color: #e4edf8; }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto;
+      padding: 80px 24px 120px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font: 700 11px var(--font-sans);
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: #67e8f9;
+      padding: 6px 14px; border-radius: 9999px;
+      background: rgba(34,211,238,0.10);
+      border: 1px solid rgba(34,211,238,0.28);
+      margin-bottom: 32px;
+      animation: fadeUp 800ms 0.05s ease-out both;
+    }
+    .hero-eyebrow .pulse {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22d3ee; box-shadow: 0 0 8px #22d3ee;
+      animation: pulse-soft 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-soft { 0%, 100% { opacity: 1 } 50% { opacity: 0.4 } }
+
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 84px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      color: #f0f4f8;
+      margin: 0 0 24px;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      animation: fadeUp 900ms 0.1s ease-out both;
+    }
+    .hero h1 .accent { color: #67e8f9; }
+
+    .hero p.lede {
+      font-size: clamp(16px, 1.5vw, 19px);
+      color: #bcccdc;
+      max-width: 640px; margin: 0 auto 40px;
+      line-height: 1.65;
+      animation: fadeUp 900ms 0.2s ease-out both;
+    }
+
+    .hero-ctas {
+      display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 900ms 0.3s ease-out both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 24px; border-radius: 10px;
+      font: 600 14.5px var(--font-sans); border: 0; cursor: pointer;
+      transition: all 180ms; text-decoration: none;
+    }
+    .btn-primary {
+      background: #06b6d4; color: #fff;
+      box-shadow: 0 10px 32px rgba(6,182,212,0.32), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .btn-primary:hover { background: #22d3ee; transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(13,28,50,0.55); color: #d9e2ec;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .btn-secondary:hover { background: rgba(36,59,85,0.70); border-color: rgba(34,211,238,0.30); }
+
+    /* ── Glass stat strip at hero bottom ──────────────────────── */
+    .hero-stats {
+      margin: 64px auto 0; max-width: 880px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(34,211,238,0.10);
+      border: 1px solid rgba(34,211,238,0.18);
+      border-radius: 14px; overflow: hidden;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+      animation: fadeUp 1000ms 0.45s ease-out both;
+    }
+    .stat-cell {
+      padding: 22px 16px; text-align: center;
+      background: rgba(13,28,50,0.75);
+    }
+    .stat-cell .v {
+      font: 800 30px var(--font-sans);
+      color: #22d3ee; letter-spacing: -0.02em; line-height: 1;
+    }
+    .stat-cell .l {
+      font-size: 11px; color: #829ab1;
+      margin-top: 8px; letter-spacing: 0.02em;
+    }
+
+    /* ── Feature row ──────────────────────────────────────────── */
+    .features-wrap {
+      position: relative; z-index: 2;
+      background: #0a1120;
+    }
+    .features {
+      max-width: 1280px; margin: 0 auto;
+      padding: 96px 24px;
+    }
+    .section-head { text-align: center; margin-bottom: 56px; }
+    .section-eyebrow {
+      font: 700 11px var(--font-sans);
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: #627d98; margin-bottom: 14px;
+    }
+    .section-head h2 {
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 600; letter-spacing: -0.02em;
+      color: #d9e2ec; margin: 0 0 12px;
+    }
+    .section-head p {
+      max-width: 560px; margin: 0 auto;
+      color: #829ab1; font-size: 16px; line-height: 1.65;
+    }
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .feat-card {
+      display: block; padding: 28px;
+      background: rgba(22,32,50,0.55); border: 1px solid;
+      border-radius: 14px; text-decoration: none;
+      transition: all 200ms;
+    }
+    .feat-card:hover { background: rgba(22,32,50,0.85); transform: translateY(-2px); }
+    .feat-card .ic { width: 36px; height: 36px; margin-bottom: 20px; }
+    .feat-card h3 { font-size: 17px; font-weight: 600; color: #e4edf8; margin: 0 0 8px; }
+    .feat-card p { font-size: 14px; color: #829ab1; line-height: 1.6; margin: 0; }
+    .feat-arrow { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 12.5px; font-weight: 600; }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .sns-footer {
+      position: relative; z-index: 2;
+      background: #080f1e; border-top: 1px solid rgba(22,32,50,0.6);
+    }
+    .sns-footer-inner {
+      max-width: 1280px; margin: 0 auto; padding: 40px 24px 32px;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px;
+    }
+    .sns-footer h4 { font-size: 13px; font-weight: 600; color: #bcccdc; margin: 0 0 12px; }
+    .sns-footer p { font-size: 12px; color: #486581; line-height: 1.6; margin: 0; max-width: 360px; }
+    .sns-footer a { display: block; padding: 4px 0; font-size: 12px; color: #627d98; text-decoration: none; }
+    .sns-footer a:hover { color: #bcccdc; }
+    .sns-footer .colophon {
+      max-width: 1280px; margin: 0 auto; padding: 16px 24px 28px;
+      border-top: 1px solid rgba(22,32,50,0.5);
+      text-align: center; font-size: 11px; color: #3b4f6b;
+    }
+
+    /* ── Disclaimer pill (corner) ─────────────────────────────── */
+    .disclaimer-pill {
+      position: fixed; bottom: 14px; right: 14px; z-index: 40;
+      display: inline-flex; align-items: center; gap: 8px;
+      max-width: 240px; padding: 6px 10px;
+      background: rgba(8,4,0,0.50);
+      border: 1px solid rgba(217,119,6,0.18);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      font-size: 10px; color: rgba(254,243,199,0.55);
+    }
+    .disclaimer-pill a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .disclaimer-pill button {
+      background: transparent; border: 0; color: rgba(180,83,9,0.5);
+      cursor: pointer; padding: 0; display: flex;
+    }
+
+    /* ── Helmet pop on initial load ───────────────────────────── */
+    @keyframes helmet-pop {
+      0% { filter: drop-shadow(0 0 0 rgba(255,220,80,0)); transform: scale(0.5) rotate(-18deg); opacity: 0; }
+      42% { filter: drop-shadow(0 0 26px rgba(255,210,60,0.9)) drop-shadow(0 0 10px rgba(255,255,200,0.45)); transform: scale(1.3) rotate(10deg); opacity: 1; }
+      68% { filter: drop-shadow(0 0 12px rgba(255,230,120,0.45)); transform: scale(0.93) rotate(-2deg); }
+      100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.25)); transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .helmet-pop { animation: helmet-pop 1.1s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 880px) {
+      .sns-nav { display: none; }
+      .hero { padding: 56px 20px 80px; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); margin-top: 48px; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .sns-footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Looping video backdrop (the brief) -->
+  <div class="backdrop" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="assets/hero-backdrop.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Header -->
+  <header class="sns-header">
+    <div class="sns-header-inner">
+      <a class="sns-logo" href="#">
+        <span class="helmet helmet-pop" aria-hidden="true">⛑️</span>
+        <span class="wm">Safe<span class="n">N</span>Sound</span>
+      </a>
+      <nav class="sns-nav" aria-label="Primary">
+        <a href="#" class="active">Map</a>
+        <a href="#">State Overview</a>
+        <a href="#">School Safety</a>
+        <a href="#">Route Safety</a>
+        <a href="#">Transparency</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" data-screen-label="01 Hero">
+      <div class="hero-eyebrow">
+        <span class="pulse"></span>
+        Public-safety intelligence · live across all 50 states
+      </div>
+      <h1>Know Before <span class="accent">You Go.</span></h1>
+      <p class="lede">
+        Data-driven safety insights for families and women. Understand the
+        safety landscape of any area in the United States using publicly
+        available data — crime, environmental, civic, and more.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Explore the Map
+        </a>
+        <a class="btn btn-secondary" href="#">
+          How It Works
+        </a>
+      </div>
+
+      <div class="hero-stats" role="group" aria-label="Coverage statistics">
+        <div class="stat-cell"><div class="v">50</div><div class="l">States Covered</div></div>
+        <div class="stat-cell"><div class="v">44,891</div><div class="l">Schools Indexed</div></div>
+        <div class="stat-cell"><div class="v">7</div><div class="l">Safety Factors</div></div>
+        <div class="stat-cell"><div class="v">100%</div><div class="l">Public Data</div></div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <div class="features-wrap">
+      <section class="features" data-screen-label="02 Features">
+        <div class="section-head">
+          <div class="section-eyebrow">What you can do</div>
+          <h2>Three lenses on the same data.</h2>
+          <p>Every score is transparent — open any number and see the seven
+          weighted factors and the public datasets behind it.</p>
+        </div>
+        <div class="feat-grid">
+          <a class="feat-card" href="#" style="border-color: rgba(6,182,212,0.22)">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+            <h3>Interactive Safety Map</h3>
+            <p>Color-coded H3 hex heatmap of the US. Filter by crime, environment, and demographics — every toggle rescore in real time.</p>
+            <div class="feat-arrow" style="color: #22d3ee">Open the map →</div>
+          </a>
+          <a class="feat-card" href="#" style="border-color: rgba(34,197,94,0.22)">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <h3>School Safety</h3>
+            <p>Search any of 44,891 schools. Get a 0–100 Safe Index for the radius around it, with factor-by-factor breakdown.</p>
+            <div class="feat-arrow" style="color: #22c55e">Search schools →</div>
+          </a>
+          <a class="feat-card" href="#" style="border-color: rgba(249,115,22,0.22)">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+            <h3>Route Safety</h3>
+            <p>Plan a commute and see segment-by-segment risk, with time-of-day modifiers. Discover safer alternatives.</p>
+            <div class="feat-arrow" style="color: #f97316">Plan a route →</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="sns-footer">
+    <div class="sns-footer-inner">
+      <div>
+        <h4>SafeNSound</h4>
+        <p>Data-driven safety insights for families and women. All data is
+        sourced from publicly available datasets. Scores are statistical
+        estimates, not guarantees.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="#">Interactive Map</a>
+        <a href="#">School Safety</a>
+        <a href="#">Route Safety</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Transparency &amp; Methodology</a>
+        <a href="#">Disclaimers</a>
+        <a href="#">Data Sources</a>
+      </div>
+    </div>
+    <div class="colophon">© 2026 SafeNSound. All safety scores are estimates for educational purposes only.</div>
+  </footer>
+
+  <!-- Persistent disclaimer pill -->
+  <div class="disclaimer-pill" role="alert" id="disclaimer">
+    <span>⚠</span>
+    <span style="flex:1">Estimates only. <a href="#">Methodology</a>.</span>
+    <button aria-label="Dismiss" onclick="document.getElementById('disclaimer').remove()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</body>
+</html>

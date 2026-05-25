@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:24px;display:flex;flex-direction:column;gap:14px;}
+  .label{font-size:10px;color:var(--color-surface-500);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .radii{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .r{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .r .box{width:64px;height:64px;background:rgba(22,32,50,.6);border:1px solid rgba(36,59,85,.5);}
+  .r small{font-family:var(--font-mono);font-size:10px;color:#627d98;}
+  .r b{font-size:11px;color:#bcccdc;}
+</style></head>
+<body><div class="card">
+  <div class="label">Radii</div>
+  <div class="radii">
+    <div class="r"><div class="box" style="border-radius:6px"></div><b>sm</b><small>6px · inputs</small></div>
+    <div class="r"><div class="box" style="border-radius:8px"></div><b>md</b><small>8px · buttons</small></div>
+    <div class="r"><div class="box" style="border-radius:12px"></div><b>lg</b><small>12px · cards</small></div>
+    <div class="r"><div class="box" style="border-radius:16px"></div><b>xl</b><small>16px · panels</small></div>
+    <div class="r"><div class="box" style="border-radius:20px"></div><b>2xl</b><small>20px · modal</small></div>
+    <div class="r"><div class="box" style="border-radius:9999px"></div><b>pill</b><small>full</small></div>
+  </div>
+</div></body></html>

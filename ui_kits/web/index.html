@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280">
+  <title>SafeNSound · Web UI Kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100vh; background: #0d1e35; color: #e4edf8; font-family: var(--font-sans); }
+    body { display: flex; flex-direction: column; }
+    main { flex: 1; }
+    .kit-switcher {
+      position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 60;
+      display: inline-flex; gap: 4px; padding: 4px;
+      background: rgba(13,28,50,0.90); backdrop-filter: blur(10px);
+      border: 1px solid rgba(34,211,238,0.25); border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    }
+    .kit-switcher button {
+      padding: 6px 14px; font: 500 12px var(--font-sans); border: 0; cursor: pointer;
+      background: transparent; color: #829ab1; border-radius: 8px; transition: all 150ms;
+    }
+    .kit-switcher button.on { background: rgba(34,211,238,0.18); color: #a5f3fc; box-shadow: inset 0 0 0 1px rgba(34,211,238,0.30); }
+    @keyframes sns-ping {
+      75%, 100% { transform: scale(1.8); opacity: 0; }
+      0% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes sns-stepIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes helmet-pop {
+      0% { filter: drop-shadow(0 0 0 rgba(255,220,80,0)); transform: scale(0.5) rotate(-18deg); opacity: 0; }
+      42% { filter: drop-shadow(0 0 26px rgba(255,210,60,0.9)) drop-shadow(0 0 10px rgba(255,255,200,0.45)); transform: scale(1.3) rotate(10deg); opacity: 1; }
+      68% { filter: drop-shadow(0 0 12px rgba(255,230,120,0.45)); transform: scale(0.93) rotate(-2deg); }
+      100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.25)); transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .helmet-pop { animation: helmet-pop 1.1s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both; display: inline-block; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="Icons.jsx"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="FeatureCard.jsx"></script>
+  <script type="text/babel" src="StatStrip.jsx"></script>
+  <script type="text/babel" src="ScoreBadge.jsx"></script>
+  <script type="text/babel" src="GradientBar.jsx"></script>
+  <script type="text/babel" src="Toggle.jsx"></script>
+  <script type="text/babel" src="MapLegend.jsx"></script>
+  <script type="text/babel" src="EmergencyButton.jsx"></script>
+  <script type="text/babel" src="DisclaimerPill.jsx"></script>
+  <script type="text/babel" src="TutorialCard.jsx"></script>
+  <script type="text/babel" src="SchoolSafetyView.jsx"></script>
+  <script type="text/babel" src="MapView.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      const [screen, setScreen] = useState("home");
+      const screens = [
+        { id: "home", label: "Home" },
+        { id: "school", label: "School Safety" },
+        { id: "map", label: "Map" },
+      ];
+
+      return (
+        <>
+          <window.Header active={
+            screen === "school" ? "/school-safety" :
+            screen === "map" ? "/map" : "/"
+          } />
+
+          <div className="kit-switcher" role="tablist" aria-label="UI kit screens">
+            {screens.map((s) => (
+              <button
+                key={s.id}
+                className={screen === s.id ? "on" : ""}
+                onClick={() => setScreen(s.id)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          <main>
+            {screen === "home" && (
+              <div data-screen-label="Home" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 16px 96px" }}>
+                <window.Hero />
+                <window.FeatureCardGrid />
+                <window.StatStrip />
+              </div>
+            )}
+            {screen === "school" && (
+              <div data-screen-label="School Safety">
+                <window.SchoolSafetyView />
+              </div>
+            )}
+            {screen === "map" && (
+              <window.MapView />
+            )}
+          </main>
+
+          <window.Footer />
+
+          {/* Corner disclaimer pill */}
+          <div style={{ position: "fixed", bottom: 12, right: 12, zIndex: 30 }}>
+            <window.DisclaimerPill />
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

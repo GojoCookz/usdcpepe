@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);}
+  .card{padding:24px;display:flex;flex-direction:column;gap:16px;}
+  .bar{height:32px;border-radius:8px;background:var(--score-gradient);box-shadow:0 0 12px rgba(34,211,238,.08), inset 0 1px 0 rgba(255,255,255,.1);}
+  .stops{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+  .stop{display:flex;flex-direction:column;gap:6px;}
+  .chip{height:36px;border-radius:6px;box-shadow:0 0 12px currentColor;}
+  .stop .nm{font-size:11px;font-weight:600;color:var(--color-surface-100);}
+  .stop .hex{font-family:var(--font-mono);font-size:10px;color:var(--color-surface-500);}
+  .label{font-size:10px;color:var(--color-surface-500);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+</style></head>
+<body><div class="card">
+  <div class="label">Safe Index · 0 → 100</div>
+  <div class="bar"></div>
+  <div class="stops">
+    <div class="stop"><div class="chip" style="background:#82123b;color:#82123b"></div><div class="nm">Critical</div><div class="hex">#82123b</div></div>
+    <div class="stop"><div class="chip" style="background:#be1c1c;color:#be1c1c"></div><div class="nm">High Risk</div><div class="hex">#be1c1c</div></div>
+    <div class="stop"><div class="chip" style="background:#e82c2c;color:#e82c2c"></div><div class="nm">Elevated</div><div class="hex">#e82c2c</div></div>
+    <div class="stop"><div class="chip" style="background:#fbbf24;color:#fbbf24"></div><div class="nm">Caution</div><div class="hex">#fbbf24</div></div>
+    <div class="stop"><div class="chip" style="background:#22c55e;color:#22c55e"></div><div class="nm">Low Risk</div><div class="hex">#22c55e</div></div>
+    <div class="stop"><div class="chip" style="background:#34d399;color:#34d399"></div><div class="nm">Safe</div><div class="hex">#34d399</div></div>
+  </div>
+</div></body></html>

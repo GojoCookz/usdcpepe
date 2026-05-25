@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--bg-app);color:var(--color-text-primary);}
+  .card{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .ex{padding:18px;background:rgba(22,32,50,.5);border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;}
+  .ex .name{font-size:10px;color:#627d98;letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .demo{height:48px;width:120px;border-radius:8px;}
+  .glass{height:64px;width:100%;border-radius:12px;background:rgba(13,28,50,.90);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 8px 32px rgba(0,0,0,.45);border:1px solid rgba(36,59,85,.35);}
+  .cta{background:#06b6d4;box-shadow:0 10px 32px rgba(6,182,212,.30);}
+  .danger{background:linear-gradient(135deg,#ef4444 0%,#b91c1c 100%);box-shadow:0 4px 20px rgba(239,68,68,.55), inset 0 1px 0 rgba(255,255,255,.18);}
+  .colored{background:#34d399;box-shadow:0 0 12px #34d39960;}
+</style></head>
+<body><div class="card">
+  <div class="ex"><span class="name">Glass panel · header / legend / popup</span><div class="glass"></div></div>
+  <div class="ex"><span class="name">CTA shadow · primary buttons</span><div class="demo cta"></div></div>
+  <div class="ex"><span class="name">Danger glow · emergency button</span><div class="demo danger" style="width:48px;height:48px;border-radius:9999px;"></div></div>
+  <div class="ex"><span class="name">Data glow · score-tinted</span><div class="demo colored"></div></div>
+</div></body></html>
